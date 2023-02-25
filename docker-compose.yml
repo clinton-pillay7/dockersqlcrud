@@ -8,9 +8,10 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
   web:
-    image: httpd  # this will use httpd:latest
+    build: ./http
+#   image: php:8.0-apache
     volumes:
-      - ./http:/usr/local/apache2/htdocs/ 
+      - ./http:/var/www/html/ 
   db: 
     image: mysql:latest
     ports: 
@@ -19,9 +20,9 @@ services:
       - 3306
     environment:
       MYSQL_DATABASE: "cruddb"
-      MYSQL_ROOT_USER: "root"
+      #MYSQL_ROOT_USER: "root"
       MYSQL_ROOT_PASSWORD: "rootpassword"
-      MYSQL_ALLOW_EMPTY_PASSWORD: ""
-      MYSQL_RANDOM_ROOT_PASSWORD: ""
+      #MYSQL_ALLOW_EMPTY_PASSWORD: "rootpassword"
+      #MYSQL_RANDOM_ROOT_PASSWORD: "rootpassword"
 
 
