@@ -24,5 +24,20 @@ services:
       MYSQL_ROOT_PASSWORD: "rootpassword"
       #MYSQL_ALLOW_EMPTY_PASSWORD: "rootpassword"
       #MYSQL_RANDOM_ROOT_PASSWORD: "rootpassword"
-
-
+  mysql-exporter:
+    image: prom/mysqld-exporter
+    container_name: mysql-exporter
+    ports:
+      - 9104:9104
+    volumes:
+      - ./mysql-exporter/.my.cnf:/root/.my.cnf
+    environment:
+      - DATA_SOURCE_NAME="exporter:exporterpassword@(127.0.0.1:3306)/"
+      - collect.info_schema.processlist
+      - collect.info_schema.innodb_metrics
+      - collect.info_schema.tablestats
+      - collect.info_schema.tables
+      - collect.info_schema.userstats
+      - collect.engine_innodb_status
+    depends_on:
+      - db
