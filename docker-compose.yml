@@ -24,6 +24,8 @@ services:
       MYSQL_ROOT_PASSWORD: "rootpassword"
       #MYSQL_ALLOW_EMPTY_PASSWORD: "rootpassword"
       #MYSQL_RANDOM_ROOT_PASSWORD: "rootpassword"
+    volumes:
+      - ./sql:/var/lib/mysql
   mysql-exporter:
     image: prom/mysqld-exporter
     container_name: mysql-exporter
@@ -32,7 +34,7 @@ services:
     volumes:
       - ./mysql-exporter/.my.cnf:/root/.my.cnf
     environment:
-      - DATA_SOURCE_NAME="exporter:exporterpassword@(127.0.0.1:3306)/"
+      - DATA_SOURCE_NAME="exporter:exporterpassword@(crud-db-1:3306)/"
       - collect.info_schema.processlist
       - collect.info_schema.innodb_metrics
       - collect.info_schema.tablestats
